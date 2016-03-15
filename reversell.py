@@ -43,6 +43,16 @@ def reverse_linked_list(head):
     '321'
     """
 
+    new_head = None
+    current = head
+
+    # Traverse the ll and switch direction of pointers
+    while current:
+        new_head = Node(current.data, new_head)
+        current = current.next
+
+    return new_head
+
 
 if __name__ == '__main__':
     import doctest
