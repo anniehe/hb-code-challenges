@@ -98,40 +98,35 @@ def pattern_match(pattern, astring):
     assert (pattern.replace("a", "").replace("b", "") == ""
             and pattern.startswith("a")), "invalid pattern"
 
-    # number of times a appears in the pattern
-    a_count = pattern.count("a")
+    a_count = pattern.count("a")    # number of times a appears in pattern
+    b_count = pattern.count("b")    # number of times b appears in pattern
+    first_b = pattern.find("b")     # index of first b (-1 if not in pattern)
 
-    # number of times b appears in the pattern
-    b_count = pattern.count("b")
+    # Check every possible length of a, from 0 to the max
+    # Max is determined by count of how many a's must appear
 
-    # where b first appears
-    first_b = pattern.find("b")
-
-    # get length of string
     astring_length = len(astring)
-
-    # get list of possible lengths of a
     max_length = astring_length / a_count
-    pos_lengths = []
-    for i in range(max_length + 1):
-        pos_lengths.append(i)
 
-    # for every possible length of a
-    for a_length in pos_lengths:
+    for a_length in range(0, max_length + 1):
 
-        #  check b_length
+        # For this length of a, find required length of b
         if b_count:
-            b_length = (astring_length - (a_length * a_count)) / b_count
+            b_length = (astring_length - (a_length * a_count)) / float(b_count)
         else:
             b_length = 0
 
-        # locate b_start
+        # Fast fail optimization: b_length must be int and >= 0
+        if int(b_length) != b_length or b_length < 0:
+            continue
+
+        # Find where b would need to begin
         b_start = first_b * a_length
 
-        # check if a match using matches() helper function
+        # Check if this is a match using matches() helper function
         if matches(pattern=pattern,
                    a=astring[0:a_length],
-                   b=astring[b_start:b_start + b_length],
+                   b=astring[b_start:b_start + int(b_length)],
                    astring=astring):
             return True
 
