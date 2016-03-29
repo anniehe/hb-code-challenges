@@ -140,15 +140,20 @@ def make_bst(nums):
     Returns the root node of a new BST that is valid and balanced.
     """
 
+    # Base case: when there's nothing in the list
     if not nums:
         return None
 
     midpt = len(nums)/2
+
+    # Make root node out of value at midpt
     root = BinaryNode(nums[midpt])
 
+    # Recursively make new root nodes for left and right
     left = make_bst(nums[:midpt])
     right = make_bst(nums[(midpt + 1):])
 
+    # Connect the left and right nodes to root node
     root.left = left
     root.right = right
 
