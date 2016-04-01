@@ -28,8 +28,21 @@ def is_palindrome(word):
 
     return True
 
-    # ALTERNATIVE
+    # # ALTERNATIVE
     # return word == word[::-1]
+
+
+    # # WITH RECURSION
+    # if len(word) == 1:
+    #     return True
+
+    # if not word:
+    #     return True
+
+    # if word[0] != word[-1]:
+    #     return False
+
+    # return is_palindrome(word[1:-1])
 
 
 if __name__ == '__main__':
